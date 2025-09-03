@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albedo Investigators - Standards Alignment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .selector-section {
+            background: #f8fcf8;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px solid #27ae60;
+        }
+
+        .selector-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .state-selector {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .state-selector:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+        }
+
+        .standards-display {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .standards-header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .standards-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .standards-section {
+            margin-bottom: 25px;
+            background: #f8fcf8;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .standards-section h3 {
+            color: #27ae60;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 5px;
+        }
+
+        .standard-item {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .standard-code {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 0.9rem;
+        }
+
+        .standard-text {
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .activity-info {
+            background: #e8f8e8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #27ae60;
+        }
+
+        .activity-info h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            background: #f8fcf8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .selector-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Albedo Investigators</h1>
+            <p>Standards Alignment Tool for Teachers</p>
+        </div>
+
+        <div class="content">
+            <div class="activity-info">
+                <h3>Activity Overview</h3>
+                <p><strong>Albedo Investigators</strong> engages students in hands-on investigation of how surface color affects solar energy absorption. Teams build two identical boxes with different colored linings and systematically measure temperature changes to discover albedo principles. Students connect their findings to ice-albedo feedback loops that accelerate climate change, understanding how melting Arctic ice creates conditions that lead to further warming.</p>
+            </div>
+
+            <div class="selector-section">
+                <div class="selector-label">Select your state or standards framework:</div>
+                <select id="stateSelector" class="state-selector">
+                    <option value="">Choose your state...</option>
+                    <option value="ngss">Next Generation Science Standards (NGSS)</option>
+                    <option value="california">California</option>
+                    <option value="texas">Texas (TEKS)</option>
+                    <option value="florida">Florida</option>
+                    <option value="new_york">New York</option>
+                    <option value="pennsylvania">Pennsylvania</option>
+                    <option value="illinois">Illinois</option>
+                    <option value="ohio">Ohio</option>
+                    <option value="georgia">Georgia</option>
+                    <option value="north_carolina">North Carolina</option>
+                    <option value="michigan">Michigan</option>
+                </select>
+            </div>
+
+            <div id="standardsDisplay" class="standards-display">
+                <!-- Standards content will be populated here -->
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Part of the Conceptual Academy Earth Science Field Journal Series</p>
+        </div>
+    </div>
+
+    <script>
+        const standardsData = {
+            ngss: {
+                title: "Next Generation Science Standards (NGSS)",
+                sections: {
+                    "High School Earth Science": [
+                        {
+                            code: "HS-ESS2-4",
+                            text: "Use a model to describe how variations in the flow of energy into and out of Earth's systems result in changes in climate."
+                        },
+                        {
+                            code: "HS-ESS3-3", 
+                            text: "Create a computational simulation to illustrate the relationships among management of natural resources, the sustainability of human populations, and biodiversity."
+                        },
+                        {
+                            code: "HS-ESS3-5",
+                            text: "Analyze geoscience data and the results from global climate models to make an evidence-based forecast of the current rate of global or regional climate change."
+                        }
+                    ],
+                    "Science & Engineering Practices": [
+                        {
+                            code: "Planning and Carrying Out Investigations",
+                            text: "Students plan and conduct systematic investigations to collect data on surface albedo effects and temperature changes."
+                        },
+                        {
+                            code: "Analyzing and Interpreting Data", 
+                            text: "Students analyze temperature data to identify patterns and connect observations to climate feedback mechanisms."
+                        },
+                        {
+                            code: "Using Models",
+                            text: "Students use physical models (boxes with different surfaces) to understand large-scale climate processes."
+                        }
+                    ],
+                    "Crosscutting Concepts": [
+                        {
+                            code: "Cause and Effect",
+                            text: "Students identify cause-and-effect relationships between surface properties and energy absorption, connecting to feedback loops."
+                        },
+                        {
+                            code: "Systems and System Models",
+                            text: "Students understand Earth's climate system through investigation of energy balance and feedback mechanisms."
+                        }
+                    ]
+                }
+            },
+            california: {
+                title: "California Science Standards",
+                sections: {
+                    "Earth Science": [
+                        {
+                            code: "ES 4a",
+                            text: "Students know the relative amount of incoming solar energy compared with Earth's internal energy and the energy used by society."
+                        },
+                        {
+                            code: "ES 4b",
+                            text: "Students know the fate of incoming solar radiation in terms of reflection, absorption, and photosynthesis."
+                        },
+                        {
+                            code: "ES 4c",
+                            text: "Students know the different atmospheric gases that absorb the Earth's thermal radiation and the mechanism and significance of the greenhouse effect."
+                        }
+                    ],
+                    "Investigation & Experimentation": [
+                        {
+                            code: "IE 1a",
+                            text: "Select and use appropriate tools and technology to perform tests, collect data, analyze relationships, and display data."
+                        },
+                        {
+                            code: "IE 1c",
+                            text: "Identify possible reasons for inconsistent results, such as sources of error or uncontrolled conditions."
+                        },
+                        {
+                            code: "IE 1d",
+                            text: "Formulate explanations by using logic and evidence."
+                        }
+                    ]
+                }
+            },
+            texas: {
+                title: "Texas Essential Knowledge and Skills (TEKS)",
+                sections: {
+                    "Earth and Space Science": [
+                        {
+                            code: "ESS 8A",
+                            text: "Describe components of the atmospheric, hydrologic, nitrogen, and carbon cycles."
+                        },
+                        {
+                            code: "ESS 8B", 
+                            text: "Explain how the Sun and the ocean interact in the water cycle."
+                        },
+                        {
+                            code: "ESS 11A",
+                            text: "Analyze the impact of human activities and technology on the environment including effects on global warming."
+                        }
+                    ],
+                    "Scientific Investigation": [
+                        {
+                            code: "ESS 2E",
+                            text: "Plan and implement investigative procedures including making observations, asking well-defined questions, formulating testable hypotheses, and selecting equipment and technology."
+                        },
+                        {
+                            code: "ESS 2F",
+                            text: "Collect data and make measurements with accuracy and precision."
+                        }
+                    ]
+                }
+            },
+            florida: {
+                title: "Florida Science Standards",
+                sections: {
+                    "Earth/Space Science": [
+                        {
+                            code: "SC.912.E.7.1",
+                            text: "Analyze the movement of matter and energy through the different biogeochemical cycles, including water and carbon."
+                        },
+                        {
+                            code: "SC.912.E.7.4", 
+                            text: "Summarize the conditions that contribute to the climate of a geographic area, including the relationships to lakes and oceans."
+                        },
+                        {
+                            code: "SC.912.E.7.6",
+                            text: "Relate the formation of severe weather to the various physical factors."
+                        }
+                    ],
+                    "Nature of Science": [
+                        {
+                            code: "SC.912.N.1.1",
+                            text: "Define a problem based on a specific body of knowledge, ask questions, and form a testable hypothesis."
+                        },
+                        {
+                            code: "SC.912.N.1.4",
+                            text: "Identify sources of information and assess their reliability according to the strict standards of scientific investigation."
+                        }
+                    ]
+                }
+            },
+            new_york: {
+                title: "New York State Science Standards",
+                sections: {
+                    "Earth Science": [
+                        {
+                            code: "ES 2.1a",
+                            text: "Insolation (incoming solar radiation) heats Earth's surface and atmosphere unevenly due to variations in latitude, season, time of day, and surface characteristics."
+                        },
+                        {
+                            code: "ES 2.1b",
+                            text: "This uneven heating drives the weather and climate by causing air masses of different temperatures and densities to form."
+                        },
+                        {
+                            code: "ES 2.1g",
+                            text: "A location's climate is influenced primarily by latitude, elevation, and proximity to large bodies of water."
+                        }
+                    ],
+                    "Scientific Inquiry": [
+                        {
+                            code: "SI 1.2a",
+                            text: "Devise ways of making observations to test proposed explanations."
+                        },
+                        {
+                            code: "SI 1.3a",
+                            text: "Use various methods of representing and organizing observations and data."
+                        },
+                        {
+                            code: "SI 3.1a",
+                            text: "Interpretation of data leads to development of additional hypotheses, the formulation of generalizations, or explanations of natural phenomena."
+                        }
+                    ]
+                }
+            },
+            pennsylvania: {
+                title: "Pennsylvania Science Standards",
+                sections: {
+                    "Earth Sciences": [
+                        {
+                            code: "3.5.10.C",
+                            text: "Describe Earth's different climates and the causes of climate differences."
+                        },
+                        {
+                            code: "3.5.12.C",
+                            text: "Analyze the factors that influence climate and weather."
+                        },
+                        {
+                            code: "3.5.12.D",
+                            text: "Analyze the need for emergency preparedness in response to various geological events."
+                        }
+                    ],
+                    "Nature of Science": [
+                        {
+                            code: "3.2.10.A",
+                            text: "Apply the components of scientific processes to different types of investigations."
+                        },
+                        {
+                            code: "3.2.12.B",
+                            text: "Apply appropriate instruments and apparatus to examine a variety of objects and processes."
+                        }
+                    ]
+                }
+            },
+            illinois: {
+                title: "Illinois Science Standards",
+                sections: {
+                    "Earth's Systems": [
+                        {
+                            code: "HS-ESS2-4",
+                            text: "Use a model to describe how variations in the flow of energy into and out of Earth's systems result in changes in climate."
+                        }
+                    ],
+                    "Earth and Human Activity": [
+                        {
+                            code: "HS-ESS3-3",
+                            text: "Create a computational simulation to illustrate the relationships among management of natural resources, the sustainability of human populations, and biodiversity."
+                        },
+                        {
+                            code: "HS-ESS3-5", 
+                            text: "Analyze geoscience data and the results from global climate models to make an evidence-based forecast of the current rate of global or regional climate change."
+                        }
+                    ],
+                    "Science Practices": [
+                        {
+                            code: "Planning Investigations",
+                            text: "Students design systematic investigations to test variables affecting energy absorption and reflection."
+                        }
+                    ]
+                }
+            },
+            ohio: {
+                title: "Ohio Science Standards",
+                sections: {
+                    "Earth and Space Sciences": [
+                        {
+                            code: "ESS.ES.4",
+                            text: "The interactions between the hydrosphere and atmosphere drive the weather and climate system."
+                        },
+                        {
+                            code: "ESS.ES.5",
+                            text: "The atmosphere, hydrosphere and geosphere interact and change in response to energy from the sun and Earth's interior."
+                        },
+                        {
+                            code: "ESS.HA.6",
+                            text: "Humans impact the environment in positive and negative ways. Societies have developed technologies that have benefits for the environment, and technologies that have adverse effects on the environment."
+                        }
+                    ],
+                    "Scientific Inquiry": [
+                        {
+                            code: "SI.A.1",
+                            text: "Pose questions and define problems in ways that guide investigation and design."
+                        },
+                        {
+                            code: "SI.A.2",
+                            text: "Design and conduct scientific investigations."
+                        }
+                    ]
+                }
+            },
+            georgia: {
+                title: "Georgia Science Standards",
+                sections: {
+                    "Earth Systems": [
+                        {
+                            code: "SES5d",
+                            text: "Describe the processes that change rocks and the surface of the Earth."
+                        },
+                        {
+                            code: "SES5e",
+                            text: "Recognize that gravity, density, and convection play a role in Earth processes."
+                        },
+                        {
+                            code: "SES6a",
+                            text: "Relate natural hazards to their impact on human populations."
+                        }
+                    ],
+                    "Environmental Issues": [
+                        {
+                            code: "SES6c",
+                            text: "Relate climate change, both natural and human caused, to its impact on modern society."
+                        },
+                        {
+                            code: "SES6d",
+                            text: "Relate the management of renewable and non-renewable resources to the sustainability of human society."
+                        }
+                    ]
+                }
+            },
+            north_carolina: {
+                title: "North Carolina Science Standards",
+                sections: {
+                    "Earth/Environmental Science": [
+                        {
+                            code: "EEn.2.5.1",
+                            text: "Summarize the structure and composition of our atmosphere."
+                        },
+                        {
+                            code: "EEn.2.5.5", 
+                            text: "Explain how human activities affect air quality (including air pollution, acid rain, and effects of particulate matter on human health)."
+                        },
+                        {
+                            code: "EEn.2.7.3",
+                            text: "Explain how human activities impact the biosphere (including acid rain, ozone depletion, global warming, and biodiversity loss)."
+                        }
+                    ],
+                    "Scientific Investigation": [
+                        {
+                            code: "EEn.1.1.1",
+                            text: "Explain the use of technology and digital tools as a scientific process skill."
+                        },
+                        {
+                            code: "EEn.1.1.2",
+                            text: "Develop, use and refine models to understand or represent phenomena, processes and relationships."
+                        }
+                    ]
+                }
+            },
+            michigan: {
+                title: "Michigan Science Standards",
+                sections: {
+                    "Earth Science": [
+                        {
+                            code: "HS-ESS2-4",
+                            text: "Use a model to describe how variations in the flow of energy into and out of Earth's systems result in changes in climate."
+                        },
+                        {
+                            code: "HS-ESS3-3",
+                            text: "Create a computational simulation to illustrate the relationships among management of natural resources, the sustainability of human populations, and biodiversity."
+                        },
+                        {
+                            code: "HS-ESS3-5",
+                            text: "Analyze geoscience data and the results from global climate models to make an evidence-based forecast of the current rate of global or regional climate change."
+                        }
+                    ],
+                    "Engineering Design": [
+                        {
+                            code: "HS-ETS1-1",
+                            text: "Analyze a major global challenge to specify qualitative and quantitative criteria and constraints for solutions that account for societal needs and wants."
+                        }
+                    ]
+                }
+            }
+        };
+
+        document.getElementById('stateSelector').addEventListener('change', function() {
+            const selectedState = this.value;
+            const displayDiv = document.getElementById('standardsDisplay');
+            
+            if (selectedState && standardsData[selectedState]) {
+                displayStandards(selectedState);
+                displayDiv.style.display = 'block';
+            } else {
+                displayDiv.style.display = 'none';
+            }
+        });
+
+        function displayStandards(state) {
+            const data = standardsData[state];
+            const displayDiv = document.getElementById('standardsDisplay');
+            
+            let html = `
+                <div class="standards-header">
+                    <h2>${data.title}</h2>
+                    <p>Standards addressed by the Albedo Investigators activity</p>
+                </div>
+            `;
+            
+            for (const [sectionName, standards] of Object.entries(data.sections)) {
+                html += `
+                    <div class="standards-section">
+                        <h3>${sectionName}</h3>
+                `;
+                
+                standards.forEach(standard => {
+                    html += `
+                        <div class="standard-item">
+                            <div class="standard-code">${standard.code}</div>
+                            <div class="standard-text">${standard.text}</div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            }
+            
+            displayDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
